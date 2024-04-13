@@ -1,0 +1,22 @@
+todo:
+- create fire pit entity [done]
+- create tree [done]
+ - make trees impassible [done]
+- pressing space near tree punches the tree [done]
+  - if tree has apple (visible on it) then player grabs apple [done]
+  - if tree has no apple, player grabs stick (infinite for now) [done]
+- player can grab and place down stick, if player places down stickwood on fire pit, fire pit ignites [done]
+- pressing space near ignited fire pit gives stick on fire [done]
+- walking with stick on fire near unlit candle ignites candle, uses up the stick [done]
+- once all candles a lit and everything is in place, (overworld) ritual is complete [done]
+after player completes overworld ritual, fades into ghost world and has to complete ghost ritual
+test and make sure now that replay system works correctly and completely (BEFORE working on ghost world)
+  make sure replay system also captures ritual site business...
+ritual site adjacent to overworld site, similar but different signs (skulls instead of apples)
+ghost player can only move near physical player and map center (ritual sites), create darkness effect anywhere that is away from physical player
+  ghost player simply can not move out of radius away from physical player, is dragged along with phys player if too far and phys player moves
+collect skulls from around the forest, can only move with phys player and collect skulls near him
+create effects system (not saved by replay system)
+  create fade in and fade out effects
+  smoke pillars emerging for lit fire pit and lit candles and lit sticks (if held by player, then from player's location)
+ritual site energy effects (spreading out from center of ritual site and strongly approaching slots that are set correctly)

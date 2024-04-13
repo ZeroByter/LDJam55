@@ -1,0 +1,72 @@
+Theme: Summoning
+
+Ideas:
+
+some sort of infinite game?
+
+
+GENERAL IDEAS:
+procedural level generation
+infinite
+play against ur past self
+
+
+
+
+
+2d top down game
+first act: you collect items to create a summoning ritual, puzzle to figure out how to place them in the correct place/activate things in the correct time (all procedural and random)
+  items to collect:
+    1. apples from trees (surrounded by forest and apple trees)
+    2. candles (laid around the forest, lots of candles, but less than trees)
+    3. need to light candles with fire, need to create fire (place 5(or different amount) of wood in fire pit to start fire and use 1 extra wood to carry fire to candles, light candles at right time, also able to put out candles (same button as wind force push in act 2))
+second act: you play as the ghost of your former self... cameras starts by following playback character of yourself but then you break free (hold move buttons for a few short seconds to break free and become ghost moving freely from ur past self-acting self, but u cant directly stop or control ur past self)
+  you must create your own ghostly summoning ritual before ur past self does
+  collect skulls and magic purple soul candles to use in ur ritual
+  unlike in act 1, can place candles and skulls together in same slot (candle on top of skull)
+  can light and unlight candles at will, need to light at specific timing (with ghost wind or something?)
+    how?:
+      use wind force push!
+      1. use wind force push to know down and move items your past self tries to collect to create the ritual
+      2. use wind force to push ur past self away (with cooldown, makes ur ghost character dizzy and needs a few seconds to get urself together)
+    how to win/lose?
+      how to win:
+        - create ghost-realm summoning ritual BEFORE ur past self
+        - can still interrupt and harrass past-self but its not the core gameplay of act 2
+      how to lose:
+        - fail to stop ur character from creating the summoning portal
+    what happens if u win/lose?
+      if you win/lose, play game in act 1 again BUT alongside ur past playthroughs!
+
+
+
+
+
+
+2d top down game, you have to do X but slowly, past versions of yourself get summoned (and do exactly what you do! just in a delay) and you have a conflicting goal than of ur past clones
+
+
+
+
+
+
+at first u collect and bring items to make satanic ritual and open devil portal
+then devils start infinitely spawning from the portal (summoning)
+you must close the portal! but the spawned demons try to stop u (how?) from closing the portal meanwhile they keep spawning (forever)
+fight the demons to close the portal (how?)
+
+
+
+
+
+
+
+player controls 2d character summoning mini-devils (satanic ritual look-alike thingies)
+each summoned devil helps player summon more devils (automatically, npc like, can not be controlled at all)
+
+
+
+
+pushing/pulling/forcing parts in a level to the center to summon creature...
+summoning creature erupts the universe (level, player character and environment) and scrambles everything and player has to start again
+endless game (get most score in time)
