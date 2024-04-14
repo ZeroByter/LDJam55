@@ -20,7 +20,7 @@ export default class Game {
 
     this.isRunning = false
 
-    this.debug = true
+    this.debug = false
 
     this.mainLoopHandle = -1
 

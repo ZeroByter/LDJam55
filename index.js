@@ -36,6 +36,9 @@ let game = new Game((a) => {
 
 let hasPlayedBackgroundSong = false
 
+new Audio("./sound/click.wav")
+new Audio("./sound/synth.wav")
+
 const backgroundSong = new Audio()
 backgroundSong.crossOrigin = "Anonymous"
 backgroundSong.src = "./sound/bg.wav"
