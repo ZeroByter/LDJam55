@@ -4,11 +4,12 @@ import World from "./world.js";
 
 const screens = new ScreensManager()
 
-// screens.setScreen("main_menu")
-screens.setScreen("fuck")
+screens.setScreen("main_menu")
 
 let game = new Game()
-game.startGame()
+
+// screens.setScreen("fuck")
+// game.startGame()
 
 const startPlayingButtons = document.querySelectorAll(".start_playing_button")
 for (const button of startPlayingButtons) {

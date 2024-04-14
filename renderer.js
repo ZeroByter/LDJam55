@@ -8,6 +8,11 @@ export default class Renderer {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
+    window.onresize = (e) => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
     this.canvas = canvas
     this.ctx = ctx
 
