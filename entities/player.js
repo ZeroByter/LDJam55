@@ -78,6 +78,8 @@ export default class Player extends Entity {
       } else {
         //holding something, find somewhere to drop it
         this.holding.location = this.location.copy().minus(0, 0.25)
+        this.holding.spriteAngle = 0
+        this.holding.flipSprite = false
         this.holding.isBeingHeld = false
 
         if (this.holding instanceof Candle || this.holding instanceof Apple || this.holding instanceof Skull) {
@@ -206,13 +208,8 @@ export default class Player extends Entity {
     if (this.holding) {
       const drawSize = this.holding.spriteSize * scale
 
-      if (this.holding.actualSprite) {
-        const image = images.getImage(this.holding.sprite)
-        ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - size + this.holdingOffset, drawSize, drawSize)
-      } else {
-        ctx.fillStyle = this.holding.sprite
-        ctx.fillRect(drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - size + this.holdingOffset, drawSize, drawSize)
-      }
+      const image = images.getImage(this.holding.sprite)
+      ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - size + this.holdingOffset, drawSize, drawSize)
     }
   }
 

@@ -10,7 +10,6 @@ export default class Stick extends Pickable {
 
     this.sprite = "stick"
     this.spriteSize = 0.5
-    this.actualSprite = true
 
     this.spriteIndex = 0
     this.lastSpriteChange = 0

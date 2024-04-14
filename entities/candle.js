@@ -9,7 +9,6 @@ export default class Candle extends Pickable {
     this.location = new vector2(x, y)
 
     this.sprite = "candle"
-    this.actualSprite = true
     this.spriteSize = 0.55
 
     this.spriteIndex = 0

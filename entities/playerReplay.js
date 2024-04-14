@@ -63,13 +63,8 @@ export default class PlayerReplay extends Entity {
     if (this.holding) {
       const drawSize = this.holding.spriteSize * scale
 
-      if (this.holding.actualSprite) {
-        const image = Game.gameInstance.images.getImage(this.holding.sprite)
-        ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - height / 2, drawSize, drawSize)
-      } else {
-        ctx.fillStyle = this.holding.sprite
-        ctx.fillRect(drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - height / 2, drawSize, drawSize)
-      }
+      const image = Game.gameInstance.images.getImage(this.holding.sprite)
+      ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - height / 2, drawSize, drawSize)
     }
   }
 

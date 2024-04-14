@@ -6,10 +6,11 @@ export default class Pickable extends Entity {
   constructor() {
     super()
 
-    this.sprite = "red"
-    this.actualSprite = false
+    this.sprite = ""
 
     this.spriteSize = 0.25
+    this.spriteAngle = Math.random() * 180
+    this.flipSprite = Math.random() < 0.5
 
     this.isBeingHeld = false
 
@@ -37,13 +38,15 @@ export default class Pickable extends Entity {
       return
     }
 
-    if (this.actualSprite) {
-      const image = Game.gameInstance.images.getImage(this.sprite)
-      ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2, drawSize, drawSize)
-    } else {
-      ctx.fillStyle = this.sprite
-      ctx.fillRect(drawXY.x - drawSize / 2, drawXY.y - drawSize / 2, drawSize, drawSize)
+    ctx.save()
+    ctx.translate(drawXY.x, drawXY.y)
+    ctx.rotate(this.spriteAngle * Math.PI / 180)
+    if (this.flipSprite) {
+      ctx.scale(-1, 1)
     }
+    const image = Game.gameInstance.images.getImage(this.sprite)
+    ctx.drawImage(image, drawSize / -2, drawSize / -2, drawSize, drawSize)
+    ctx.restore()
   }
 
   recordState() {

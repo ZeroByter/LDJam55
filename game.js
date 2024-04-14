@@ -9,6 +9,7 @@ import PlayerReplay from "./entities/playerReplay.js"
 import vector2 from "./vector2.js"
 import MoveToGhostWorldEffect from "./effects/move_to_ghost_world.js"
 import Stick from "./entities/stick.js"
+import Skull from "./entities/skull.js"
 
 export default class Game {
   /** @type Game */
@@ -102,6 +103,13 @@ export default class Game {
             break
           }
         }
+      }
+
+      if (this.inputs.isKeyPressed("r")) {
+        const skull = new Skull()
+        Game.gameInstance.world.addEntity(skull)
+        Game.gameInstance.world.getPlayer().holding = skull
+        skull.isBeingHeld = true
       }
     }
 
