@@ -37,7 +37,8 @@ export default class SpritesLoader {
 
   #loadImage(id, path, scale = 4) {
     return new Promise(resolve => {
-      let newImage = new Image
+      let newImage = new Image()
+      newImage.crossOrigin = "Anonymous"
       newImage.onload = () => {
         let renderWidth = newImage.width * scale
         let renderHeight = newImage.height * scale
