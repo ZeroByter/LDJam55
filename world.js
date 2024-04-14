@@ -1,9 +1,11 @@
 import Effect from "./effects/effect.js"
+import GhostMoveAreaEffect from "./effects/ghost_move_area.js"
 import Apple from "./entities/apple.js"
 import Candle from "./entities/candle.js"
 import FirePit from "./entities/fire_pit.js"
 import Player from "./entities/player.js"
 import Ritual from "./entities/ritual.js"
+import Skull from "./entities/skull.js"
 import Stick from "./entities/stick.js"
 import Game from "./game.js"
 import { distToSegment } from "./math.js"
@@ -31,6 +33,7 @@ export default class World {
 
     this.rituals = []
     this.candles = []
+    this.playerReplayer = null
 
     const newPlayer = new Player()
 
@@ -160,14 +163,13 @@ export default class World {
 
     // generate overworld ritual spot
     const overworldRitual = new Ritual(this, new vector2(95, 100), 8, true)
-    this.rituals.push(overworldRitual)
     this.addEntity(overworldRitual)
   }
 
   /**
    * @param {vector2} centerLocation 
    */
-  generateRitualSpot(centerLocation, slotsCount) {
+  generateRitualSpot(centerLocation, slotsCount, isOverworld) {
     this.aboveTiles[centerLocation.x + centerLocation.y * this.width] = "ritual_center"
 
     const slots = []
@@ -175,7 +177,9 @@ export default class World {
     for (let i = 0; i < slotsCount; i++) {
       const spot = centerLocation.newVectorFromAngleAndDistance(i / slotsCount * 360, 3).round()
 
-      const accepts = Math.random() < 0.5 ? "candle" : "apple"
+      let appleOrSkull = isOverworld ? "apple" : "skull"
+
+      const accepts = Math.random() < 0.5 ? "candle" : appleOrSkull
 
       const slotData = {
         location: spot,
@@ -184,19 +188,23 @@ export default class World {
       }
 
       // DEBUG: REMOVE IN PRODUCTION
-      if (accepts === "apple") {
-        const a = new Apple(spot.x + 0.5, spot.y + 0.5)
-        a.ritualSlot = slotData
-        this.addEntity(a)
-      } else {
-        const a = new Candle(spot.x + 0.5, spot.y + 0.5)
-        a.ritualSlot = slotData
-        this.addEntity(a)
-      }
+      // if (accepts === "apple") {
+      //   const a = new Apple(spot.x + 0.5, spot.y + 0.5)
+      //   a.ritualSlot = slotData
+      //   this.addEntity(a)
+      // } else if (accepts === "skull") {
+      //   const a = new Skull(spot.x + 0.5, spot.y + 0.5)
+      //   a.ritualSlot = slotData
+      //   this.addEntity(a)
+      // } else if (accepts === "candle") {
+      //   const a = new Candle(spot.x + 0.5, spot.y + 0.5)
+      //   a.ritualSlot = slotData
+      //   this.addEntity(a)
+      // }
 
       slots.push(slotData)
 
-      this.aboveTiles[spot.x + spot.y * this.width] = accepts === "candle" ? "ritual_candle" : "ritual_apple"
+      this.aboveTiles[spot.x + spot.y * this.width] = `ritual_${accepts}`
     }
 
     return slots
@@ -205,6 +213,10 @@ export default class World {
   addEntity(entity) {
     if (entity instanceof Candle) {
       this.candles.push(entity)
+    }
+
+    if (entity instanceof Ritual) {
+      this.rituals.push(entity)
     }
 
     this.#entities.set(entity.id, entity)
@@ -233,6 +245,10 @@ export default class World {
     return this.#effects
   }
 
+  /**
+   * 
+   * @returns {Player}
+   */
   getPlayer() {
     return this.getEntity(this.playerId)
   }

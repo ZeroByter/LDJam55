@@ -15,6 +15,10 @@ export default class Effect {
 
   }
 
+  renderBetweenTiles(time, ctx, canvas) {
+
+  }
+
   preRender(time, ctx, canvas) {
 
   }

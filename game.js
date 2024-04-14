@@ -16,6 +16,8 @@ export default class Game {
   constructor() {
     Game.gameInstance = this
 
+    this.mainLoopHandle = -1
+
     this.inputs = new Inputs()
     this.camera = new Camera()
     this.renderer = new Renderer()
@@ -34,10 +36,6 @@ export default class Game {
     this.replayRecordDelay = 100
 
     this.lastTime = 0
-
-    window.requestAnimationFrame((time) => {
-      this.mainLoop(time)
-    })
   }
 
   think(time) {
@@ -87,22 +85,6 @@ export default class Game {
       entity.think(time)
     }
 
-    if (this.inputs.isKeyPressed("p")) {
-      this.isRecording = false
-
-      this.world.replay.playbackTimeStart = time
-
-      const playerId = Object.keys(this.world.replay.snapshots[0].playerSnapshots)[0]
-
-      const nonPlayerSnapshots = Object.values(this.world.replay.snapshots[0].nonPlayerSnapshots)
-      for (const snapshot of nonPlayerSnapshots) {
-        const entity = this.world.getEntity(snapshot.id)
-        entity.playbackId = snapshot.id
-      }
-
-      this.world.addEntity(new PlayerReplay(playerId))
-    }
-
     if (this.inputs.isKeyPressed("q")) {
       Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
     }
@@ -130,8 +112,18 @@ export default class Game {
 
     this.render(time)
 
-    window.requestAnimationFrame((time) => {
+    this.mainLoopHandle = window.requestAnimationFrame((time) => {
       this.mainLoop(time)
     })
+  }
+
+  startGame() {
+    this.mainLoopHandle = window.requestAnimationFrame((time) => {
+      this.mainLoop(time)
+    })
+  }
+
+  stopGame() {
+    window.cancelAnimationFrame(this.mainLoopHandle)
   }
 }

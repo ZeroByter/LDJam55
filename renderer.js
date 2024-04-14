@@ -56,6 +56,11 @@ export default class Renderer {
       entity.renderBetweenTiles(time, ctx, canvas)
     }
 
+    const effects = world.getEffects()
+    for (const [_, effect] of effects) {
+      effect.renderBetweenTiles(time, ctx, canvas)
+    }
+
     for (let y = 0; y < world.height; y++) {
       for (let x = 0; x < world.width; x++) {
         const tileIndex = x + y * world.width
@@ -72,19 +77,21 @@ export default class Renderer {
         }
 
         if (aboveTile) {
-          ctx.drawImage(Game.gameInstance.images.getImage(aboveTile), drawX, drawY, size + fraction, size + fraction)
+          const image = Game.gameInstance.images.getImage(aboveTile)
+          if (image == null) {
+            console.error(`image ${aboveTile} doesnt exist`)
+          }
+          ctx.drawImage(image, drawX, drawY, size + fraction, size + fraction)
         }
       }
     }
 
-    const effects = world.getEffects()
+    for (const [_, entity] of entities) {
+      entity.render(time, ctx, canvas)
+    }
 
     for (const [_, effect] of effects) {
       effect.preRender(time, ctx, canvas)
-    }
-
-    for (const [_, entity] of entities) {
-      entity.render(time, ctx, canvas)
     }
 
     for (const [_, effect] of effects) {

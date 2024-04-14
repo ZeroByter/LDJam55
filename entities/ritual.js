@@ -1,3 +1,4 @@
+import MoveToGhostWorldEffect from "../effects/move_to_ghost_world.js";
 import Game from "../game.js";
 import { ReplayNonPlayerSnapshot } from "../replay.js";
 import vector2 from "../vector2.js";
@@ -18,7 +19,7 @@ export default class Ritual extends Entity {
     this.location = center
 
     this.slotsCount = slotsCount
-    this.slots = world.generateRitualSpot(center, slotsCount)
+    this.slots = world.generateRitualSpot(center, slotsCount, isOverworld)
     //the above contains the following data structure
     /**
      * {
@@ -62,6 +63,7 @@ export default class Ritual extends Entity {
       this.allDone = true
 
       if (this.isOverworld) {
+        Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
         //spawn 'transition to ghost world' effect
       } else {
         //game over! transition to "you win" screen
