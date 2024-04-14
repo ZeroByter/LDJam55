@@ -2,10 +2,16 @@
   <link rel="stylesheet" href="./style.css"></link>
   <title>Hello, Me</title>
 
+  <script type="module" src="./index.js"></script>
+
   <div class="screens">
     <div class="main_menu">
       <img src="./sprites/logo.png" class="game_logo" />
-      <button class="start_playing_button">Start playing!</button>
+      <div class="images_loading_container">
+        <div class="images_loading_bar" style="width: 0%;"></div>
+        <div class="images_loading_text">0%</div>
+      </div>
+      <button class="start_playing_button" disabled>Start playing!</button>
       <div class="how_to_play">
         <div>How to play:</div>
         <div>Use WASD to move around</div>
@@ -29,8 +35,4 @@
   </div>
 
   <canvas></canvas>
-
-  <div></div>
-
-  <script type="module" src="./index.js"></script>
 </body>

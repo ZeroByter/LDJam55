@@ -6,12 +6,34 @@ const screens = new ScreensManager()
 
 screens.setScreen("main_menu")
 
-let game = new Game()
+const loadingContainer = document.querySelector(".images_loading_container")
+const loadingBar = document.querySelector(".images_loading_bar")
+const loadingText = document.querySelector(".images_loading_text")
+
+const startPlayingButtons = document.querySelectorAll(".start_playing_button")
+
+const disablePlayButtons = () => {
+  startPlayingButtons.forEach(button => button.setAttribute("disabled", true))
+}
+const enablePlayButtons = () => {
+  startPlayingButtons.forEach(button => button.removeAttribute("disabled"))
+}
+
+disablePlayButtons()
+
+let game = new Game((a) => {
+  loadingBar.style.width = `${a * 100}%`
+  loadingText.innerHTML = `${Math.round(a * 100)}%`
+
+  if (a == 1) {
+    loadingContainer.style.display = "none"
+    enablePlayButtons()
+  }
+})
 
 // screens.setScreen("fuck")
 // game.startGame()
 
-const startPlayingButtons = document.querySelectorAll(".start_playing_button")
 for (const button of startPlayingButtons) {
   button.onclick = () => {
     screens.setScreen("meme")

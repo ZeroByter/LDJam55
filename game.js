@@ -15,10 +15,10 @@ export default class Game {
   /** @type Game */
   static gameInstance = null
 
-  constructor() {
+  constructor(imagesLoadCallback) {
     Game.gameInstance = this
 
-    this.debug = true
+    this.debug = false
 
     this.mainLoopHandle = -1
 
@@ -26,7 +26,7 @@ export default class Game {
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.world = new World()
-    this.images = new ImagesLoader()
+    this.images = new ImagesLoader(imagesLoadCallback)
 
     // game loop stuff
     this.lastRanTime = 0
