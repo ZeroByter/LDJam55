@@ -95,6 +95,8 @@ export default class MoveToGhostWorldEffect extends Effect {
         world.addEntity(new Ritual(world, new vector2(105, 100), 8, false))
         world.addEffect(new GhostMoveAreaEffect())
 
+        world.isOverworld = false
+
         // spawning skulls
         const center = new vector2(world.width / 2, world.height / 2)
         for (let y = 0; y < world.height; y++) {
@@ -106,6 +108,12 @@ export default class MoveToGhostWorldEffect extends Effect {
               if (Math.random() < 0.1) {
                 world.addEntity(new Skull(x + Math.random(), y + Math.random()))
               }
+            }
+
+            world.tiles[index] = `ghost_${world.tiles[index]}`
+
+            if (world.aboveTiles[index] == "tree") {
+              world.aboveTiles[index] = `ghost_${world.aboveTiles[index]}`
             }
           }
         }

@@ -38,6 +38,10 @@ export default class Stick extends Pickable {
       this.sprite = "stick"
     }
 
+    if (!Game.gameInstance.world.isOverworld) {
+      this.sprite = `ghost_${this.sprite}`
+    }
+
     if (this.isLit != this.lastIsLit) {
       this.recordExtraData = this.isLit
     }

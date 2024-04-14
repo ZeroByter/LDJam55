@@ -12,7 +12,7 @@ export default class Inputs {
   }
 
   #onKeyDown(e) {
-    let key = e.key.toLowerCase()
+    let key = e.code.toLowerCase().replace("key", "")
     if (key == " ") key = "space"
 
     if (!this.keys.has(key)) {
@@ -23,7 +23,7 @@ export default class Inputs {
   }
 
   #onKeyUp(e) {
-    let key = e.key.toLowerCase()
+    let key = e.code.toLowerCase().replace("key", "")
     if (key == " ") key = "space"
 
     this.keys.delete(key)

@@ -74,10 +74,15 @@ export default class SpritesLoader {
       this.#globalProgressCallback = progressCallback
 
       await this.#loadImage("concrete", "./sprites/concrete.png")
+      await this.#loadImage("ghost_concrete", "./sprites/ghost_concrete.png")
 
       await this.#loadImage("grass0", "./sprites/grass0.png")
       await this.#loadImage("grass1", "./sprites/grass1.png")
       await this.#loadImage("grass2", "./sprites/grass2.png")
+
+      await this.#loadImage("ghost_grass0", "./sprites/ghost_grass0.png")
+      await this.#loadImage("ghost_grass1", "./sprites/ghost_grass1.png")
+      await this.#loadImage("ghost_grass2", "./sprites/ghost_grass2.png")
 
       await this.#loadImage("ritual_center", "./sprites/ritual_center.png")
       await this.#loadImage("ritual_apple", "./sprites/ritual_apple.png")
@@ -85,6 +90,7 @@ export default class SpritesLoader {
       await this.#loadImage("ritual_skull", "./sprites/ritual_skull.png")
 
       await this.#loadImage("tree", "./sprites/tree.png")
+      await this.#loadImage("ghost_tree", "./sprites/ghost_tree.png")
 
       await this.#loadImage("skull", "./sprites/skull.png")
 
@@ -96,10 +102,23 @@ export default class SpritesLoader {
       await this.#loadImage("stick_lit0", "./sprites/stick_lit0.png")
       await this.#loadImage("stick_lit1", "./sprites/stick_lit1.png")
 
+      await this.#loadImage("ghost_fire_pit_lit0", "./sprites/ghost_fire_pit_lit0.png")
+      await this.#loadImage("ghost_fire_pit_lit1", "./sprites/ghost_fire_pit_lit1.png")
+
+      await this.#loadImage("ghost_stick", "./sprites/ghost_stick.png")
+      await this.#loadImage("ghost_stick_lit0", "./sprites/ghost_stick_lit0.png")
+      await this.#loadImage("ghost_stick_lit1", "./sprites/ghost_stick_lit1.png")
+
       await this.#loadImage("apple", "./sprites/apple.png")
+      await this.#loadImage("ghost_apple", "./sprites/ghost_apple.png")
+
       await this.#loadImage("candle", "./sprites/candle.png")
       await this.#loadImage("candle_lit0", "./sprites/candle_lit0.png")
       await this.#loadImage("candle_lit1", "./sprites/candle_lit1.png")
+
+      await this.#loadImage("ghost_candle", "./sprites/ghost_candle.png")
+      await this.#loadImage("ghost_candle_lit0", "./sprites/ghost_candle_lit0.png")
+      await this.#loadImage("ghost_candle_lit1", "./sprites/ghost_candle_lit1.png")
 
       await this.#loadImage("player_idle0", "./sprites/player/player_idle0.png")
       await this.#loadImage("player_idle1", "./sprites/player/player_idle1.png")

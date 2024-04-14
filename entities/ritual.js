@@ -97,7 +97,7 @@ export default class Ritual extends Entity {
 
     const power = this.countOccupiedSlots(this.occupiedSlots)
 
-    const color = this.isOverworld ? "0,0,0" : "50,0,50"
+    const color = this.isOverworld ? "0,0,0" : "70,0,70"
 
     if (power > 0) {
       for (let y = 0; y < gridSize; y++) {

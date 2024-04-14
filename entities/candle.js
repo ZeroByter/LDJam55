@@ -33,6 +33,10 @@ export default class Candle extends Pickable {
       this.sprite = "candle"
     }
 
+    if (!Game.gameInstance.world.isOverworld) {
+      this.sprite = `ghost_${this.sprite}`
+    }
+
     if (this.isLit != this.lastIsLit) {
       this.recordExtraData = this.isLit
     }

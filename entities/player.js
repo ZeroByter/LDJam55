@@ -148,7 +148,7 @@ export default class Player extends Entity {
     const rounded = this.location.floor()
     const index = rounded.x + rounded.y * world.width
 
-    if (world.aboveTiles[index] === "tree" || this.location.distance(FirePit.Singleton.location.add(0.5, 0.65)) < 0.6) {
+    if ((world.aboveTiles[index] === "tree" || world.aboveTiles[index] === "ghost_tree") || this.location.distance(FirePit.Singleton.location.add(0.5, 0.65)) < 0.6) {
       this.location = oldLocation
     }
   }
@@ -162,14 +162,14 @@ export default class Player extends Entity {
     const rounded = this.location.floor()
     const index = rounded.x + rounded.y * world.width
 
-    if (world.tiles[index] === "concrete") {
+    if (world.tiles[index].endsWith("concrete")) {
       return 0.175
     } else {
       for (let y = 0; y < 3; y++) {
         for (let x = 0; x < 3; x++) {
           const newLocation = rounded.add(x - 1, y - 1)
           const index = newLocation.x + newLocation.y * world.width
-          if (world.tiles[index] === "concrete") {
+          if (world.tiles[index].endsWith("concrete")) {
             return 0.13
           }
         }

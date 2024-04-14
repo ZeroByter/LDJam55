@@ -45,7 +45,7 @@ export default class FirePit extends Entity {
   renderBetweenTiles(time, ctx, canvas) {
     super.render(time, ctx, canvas)
 
-    const { camera, images } = Game.gameInstance
+    const { camera, images, world } = Game.gameInstance
 
     const scale = camera.scale
     const drawXY = camera.worldToScreen(this.location.x, this.location.y)
@@ -54,7 +54,11 @@ export default class FirePit extends Entity {
     // ctx.fillRect(drawXY.x + scale / 8, drawXY.y + scale / 8, scale * 0.75, scale * 0.75)
 
     if (this.isLit) {
-      ctx.drawImage(images.getImage(`fire_pit_lit${this.spriteIndex}`), drawXY.x, drawXY.y, scale, scale)
+      if (world.isOverworld) {
+        ctx.drawImage(images.getImage(`fire_pit_lit${this.spriteIndex}`), drawXY.x, drawXY.y, scale, scale)
+      } else {
+        ctx.drawImage(images.getImage(`ghost_fire_pit_lit${this.spriteIndex}`), drawXY.x, drawXY.y, scale, scale)
+      }
     } else {
       ctx.drawImage(images.getImage("fire_pit"), drawXY.x, drawXY.y, scale, scale)
     }
