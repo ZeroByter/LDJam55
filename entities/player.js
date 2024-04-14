@@ -28,6 +28,17 @@ export default class Player extends Entity {
     this.holding = null
   }
 
+  playClick() {
+    const audio = new Audio("./sound/click.wav")
+    audio.play()
+  }
+
+  playSynth() {
+    const audio = new Audio("./sound/synth.wav")
+    audio.volume = 0.25
+    audio.play()
+  }
+
   think(time) {
     const inputs = Game.gameInstance.inputs
 
@@ -65,12 +76,14 @@ export default class Player extends Entity {
             if (entity instanceof Candle && entity.isLit) {
               entity.makeUnlit()
               entity.ritualSlot.occupied = false
+              this.playClick()
             } else {
               this.holding = entity
               entity.isBeingHeld = true
               if (entity.ritualSlot != null) {
                 entity.ritualSlot.occupied = false
               }
+              this.playClick()
             }
             break
           }
@@ -81,6 +94,7 @@ export default class Player extends Entity {
         this.holding.spriteAngle = 0
         this.holding.flipSprite = false
         this.holding.isBeingHeld = false
+        this.playClick()
 
         if (this.holding instanceof Candle || this.holding instanceof Apple || this.holding instanceof Skull) {
           const rituals = Game.gameInstance.world.rituals
@@ -94,6 +108,7 @@ export default class Player extends Entity {
                 if ((slot.accepts === "candle" && this.holding instanceof Candle) || (slot.accepts === "apple" && this.holding instanceof Apple) || (slot.accepts === "skull" && this.holding instanceof Skull)) {
                   if (!(this.holding instanceof Candle)) {
                     slot.occupied = true
+                    this.playSynth()
                   }
                   this.holding.ritualSlot = slot
                 }
@@ -109,11 +124,13 @@ export default class Player extends Entity {
     if (this.holding instanceof Stick && this.location.distance(FirePit.Singleton.location.add(0.5, 0.5)) < 1) {
       if (FirePit.Singleton.isLit) {
         this.holding.makeLit()
+        this.playClick()
       } else {
         FirePit.Singleton.makeLit()
         this.holding.location = new vector2(-1, -1)
         this.holding.isBeingHeld = false
         this.holding = null
+        this.playClick()
       }
     }
 
