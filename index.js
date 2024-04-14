@@ -34,6 +34,62 @@ let game = new Game((a) => {
 // screens.setScreen("fuck")
 // game.startGame()
 
+let hasPlayedBackgroundSong = false
+
+const backgroundSong = new Audio()
+backgroundSong.crossOrigin = "Anonymous"
+backgroundSong.src = "./sound/bg.wav"
+backgroundSong.loop = true
+
+const toggleBackgroundMusic = () => {
+  if (!hasPlayedBackgroundSong) {
+    return
+  }
+
+  if (backgroundSong.volume === 1) {
+    backgroundSong.volume = 0
+  } else {
+    backgroundSong.volume = 1
+  }
+}
+
+const toggleFullScreen = () => {
+  if (!document.fullscreenElement &&    // alternative standard method
+    !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+  }
+}
+
+document.addEventListener("keydown", e => {
+  if (e.code === "KeyM") {
+    toggleBackgroundMusic()
+  } else if (e.code === "KeyF") {
+    toggleFullScreen()
+  }
+})
+
+document.querySelector(".toggle_fullscreen_button").onclick = toggleFullScreen
+document.querySelector(".toggle_music_button").onclick = toggleBackgroundMusic
+
+document.body.onclick = () => {
+  backgroundSong.play()
+  hasPlayedBackgroundSong = true
+}
+
 for (const button of startPlayingButtons) {
   button.onclick = () => {
     screens.setScreen("meme")
