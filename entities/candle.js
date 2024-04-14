@@ -8,7 +8,12 @@ export default class Candle extends Pickable {
 
     this.location = new vector2(x, y)
 
-    this.sprite = "gray"
+    this.sprite = "candle"
+    this.actualSprite = true
+    this.spriteSize = 0.55
+
+    this.spriteIndex = 0
+    this.lastSpriteChange = 0
 
     this.isLit = false
 
@@ -18,6 +23,17 @@ export default class Candle extends Pickable {
   think(time) {
     super.think(time)
 
+    if (time - this.lastSpriteChange > 100) {
+      this.lastSpriteChange = time
+      this.spriteIndex = 1 - this.spriteIndex
+    }
+
+    if (this.isLit) {
+      this.sprite = `candle_lit${this.spriteIndex}`
+    } else {
+      this.sprite = "candle"
+    }
+
     if (this.isLit != this.lastIsLit) {
       this.recordExtraData = this.isLit
     }
@@ -26,12 +42,10 @@ export default class Candle extends Pickable {
   }
 
   makeLit() {
-    this.sprite = "orange"
     this.isLit = true
   }
 
   makeUnlit() {
-    this.sprite = "gray"
     this.isLit = false
   }
 

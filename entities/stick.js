@@ -12,6 +12,9 @@ export default class Stick extends Pickable {
     this.spriteSize = 0.5
     this.actualSprite = true
 
+    this.spriteIndex = 0
+    this.lastSpriteChange = 0
+
     this.isLit = false
     this.litTime = -1
 
@@ -21,8 +24,19 @@ export default class Stick extends Pickable {
   think(time) {
     super.think(time)
 
-    if (this.isLit && time - this.litTime > 6000) {
+    if (time - this.lastSpriteChange > 100) {
+      this.lastSpriteChange = time
+      this.spriteIndex = 1 - this.spriteIndex
+    }
+
+    if (this.isLit && time - this.litTime > 3000) {
       this.makeUnlit()
+    }
+
+    if (this.isLit) {
+      this.sprite = `stick_lit${this.spriteIndex}`
+    } else {
+      this.sprite = "stick"
     }
 
     if (this.isLit != this.lastIsLit) {
@@ -35,12 +49,10 @@ export default class Stick extends Pickable {
   makeLit() {
     this.isLit = true
     this.litTime = Game.gameInstance.lastRanTime
-    this.sprite = "fire_stick"
   }
 
   makeUnlit() {
     this.isLit = false
-    this.sprite = "stick"
   }
 
   implementRecordedState(data) {

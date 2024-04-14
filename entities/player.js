@@ -1,4 +1,5 @@
 import Game from "../game.js";
+import PlayerAnimationsController from "../player_animations_controller.js";
 import { ReplayPlayerSnapshot } from "../replay.js";
 import vector2 from "../vector2.js";
 import Apple from "./apple.js";
@@ -13,12 +14,21 @@ export default class Player extends Entity {
   constructor() {
     super()
 
+    this.animationsController = new PlayerAnimationsController()
+
+    this.sprite = "player_idle1"
+    this.handsSprite = "player_arms_empty_idle1"
+
+    this.holdingOffset = 0
+    this.flipSprite = false
+
     this.location = new vector2(95.5, 100.5)
+    this.lastLocation = this.location.copy()
 
     this.holding = null
   }
 
-  think() {
+  think(time) {
     const inputs = Game.gameInstance.inputs
 
     let speed = this.getMovementSpeed()
@@ -51,7 +61,7 @@ export default class Player extends Entity {
         //not holding anything, find something to pick up
 
         for (const [_, entity] of entities) {
-          if (entity instanceof Pickable && entity.location.distance(this.location) < 0.5 && !entity.isBeingHeld) {
+          if (entity instanceof Pickable && entity.location.distance(this.location.minus(0, 0.5)) < 0.5 && !entity.isBeingHeld) {
             if (entity instanceof Candle && entity.isLit) {
               entity.makeUnlit()
               entity.ritualSlot.occupied = false
@@ -74,7 +84,7 @@ export default class Player extends Entity {
           const rituals = Game.gameInstance.world.rituals
           for (const ritual of rituals) {
             for (const slot of ritual.slots) {
-              if (this.holding.location.distance(slot.location.add(0.5, 0.5)) < 0.5) {
+              if (this.holding.location.distance(slot.location.add(0, 0.5)) < 0.5) {
                 if ((slot.accepts === "candle" && this.holding instanceof Candle) || (slot.accepts === "apple" && this.holding instanceof Apple) || (slot.accepts === "skull" && this.holding instanceof Skull)) {
                   if (!(this.holding instanceof Candle)) {
                     slot.occupied = true
@@ -103,7 +113,7 @@ export default class Player extends Entity {
 
     if (this.holding instanceof Stick && this.holding.isLit) {
       for (const candle of Game.gameInstance.world.candles) {
-        if (!candle.isLit && this.holding.isLit && this.location.distance(candle.location) < 0.5) {
+        if (!candle.isLit && this.holding.isLit && this.location.distance(candle.location) < 0.75) {
           candle.makeLit()
           this.holding.makeUnlit()
           candle.ritualSlot.occupied = true
@@ -112,6 +122,18 @@ export default class Player extends Entity {
       }
     }
 
+    const movedDistance = this.location.minus(this.lastLocation)
+
+    this.animationsController.setAnimationState(movedDistance.y != 0 && movedDistance.x == 0, movedDistance.x != 0, movedDistance.magnitude(), this.holding != null)
+
+    const [sprite, handsSprite, holdingOffset] = this.animationsController.think(time)
+
+    this.sprite = sprite
+    this.handsSprite = handsSprite
+    this.holdingOffset = holdingOffset
+    this.flipSprite = movedDistance.x != 0 && movedDistance.x < 0
+
+    this.lastLocation = this.location.copy()
     Game.gameInstance.camera.location = this.location.copy()
   }
 
@@ -124,7 +146,7 @@ export default class Player extends Entity {
     const rounded = this.location.floor()
     const index = rounded.x + rounded.y * world.width
 
-    if (world.aboveTiles[index] === "tree" || this.location.distance(FirePit.Singleton.location.add(0.5, 0.5)) < 0.5) {
+    if (world.aboveTiles[index] === "tree" || this.location.distance(FirePit.Singleton.location.add(0.5, 0.65)) < 0.6) {
       this.location = oldLocation
     }
   }
@@ -163,24 +185,33 @@ export default class Player extends Entity {
   render(time, ctx, canvas) {
     super.render(time, ctx, canvas)
 
-    const drawXY = Game.gameInstance.camera.worldToScreen(this.location.x, this.location.y)
-    const scale = Game.gameInstance.camera.scale
+    const { images, camera } = Game.gameInstance
 
-    const width = 0.5 * scale
-    const height = 0.5 * scale
+    const drawXY = camera.worldToScreen(this.location.x, this.location.y)
+    const scale = camera.scale
 
-    ctx.fillStyle = "blue"
-    ctx.fillRect(drawXY.x - width / 2, drawXY.y - height, width, height)
+    const size = 0.8 * scale
+
+    ctx.save()
+    ctx.globalAlpha = Game.gameInstance.world.isOverworld ? 1 : 0.85
+    ctx.translate(drawXY.x - size / 2, drawXY.y - size)
+    if (this.flipSprite) {
+      ctx.translate(size, 0)
+      ctx.scale(-1, 1)
+    }
+    ctx.drawImage(images.getImage(this.sprite), 0, 0, size, size)
+    ctx.drawImage(images.getImage(this.handsSprite), 0, 0, size, size)
+    ctx.restore()
 
     if (this.holding) {
       const drawSize = this.holding.spriteSize * scale
 
       if (this.holding.actualSprite) {
-        const image = Game.gameInstance.images.getImage(this.holding.sprite)
-        ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - height / 2, drawSize, drawSize)
+        const image = images.getImage(this.holding.sprite)
+        ctx.drawImage(image, drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - size + this.holdingOffset, drawSize, drawSize)
       } else {
         ctx.fillStyle = this.holding.sprite
-        ctx.fillRect(drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - height / 2, drawSize, drawSize)
+        ctx.fillRect(drawXY.x - drawSize / 2, drawXY.y - drawSize / 2 - size + this.holdingOffset, drawSize, drawSize)
       }
     }
   }

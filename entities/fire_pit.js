@@ -14,6 +14,9 @@ export default class FirePit extends Entity {
 
     this.location = new vector2(x, y)
 
+    this.spriteIndex = 0
+    this.lastSpriteChange = 0
+
     this.isLit = false
 
     this.lastIsLit = true
@@ -21,6 +24,11 @@ export default class FirePit extends Entity {
 
   think(time) {
     super.think(time)
+
+    if (time - this.lastSpriteChange > 100) {
+      this.lastSpriteChange = time
+      this.spriteIndex = 1 - this.spriteIndex
+    }
 
     if (this.isLit != this.lastIsLit) {
       this.recordExtraData = this.isLit
@@ -37,15 +45,18 @@ export default class FirePit extends Entity {
   renderBetweenTiles(time, ctx, canvas) {
     super.render(time, ctx, canvas)
 
-    const scale = Game.gameInstance.camera.scale
-    const drawXY = Game.gameInstance.camera.worldToScreen(this.location.x, this.location.y)
+    const { camera, images } = Game.gameInstance
 
-    ctx.fillStyle = "rgba(0,0,0,0.75)"
-    ctx.fillRect(drawXY.x + scale / 8, drawXY.y + scale / 8, scale * 0.75, scale * 0.75)
+    const scale = camera.scale
+    const drawXY = camera.worldToScreen(this.location.x, this.location.y)
+
+    // ctx.fillStyle = "rgba(0,0,0,0.75)"
+    // ctx.fillRect(drawXY.x + scale / 8, drawXY.y + scale / 8, scale * 0.75, scale * 0.75)
 
     if (this.isLit) {
-      ctx.fillStyle = "rgba(255,0,0,0.5)"
-      ctx.fillRect(drawXY.x + scale / 8, drawXY.y + scale / 2, scale * 0.75, scale / 2.6)
+      ctx.drawImage(images.getImage(`fire_pit_lit${this.spriteIndex}`), drawXY.x, drawXY.y, scale, scale)
+    } else {
+      ctx.drawImage(images.getImage("fire_pit"), drawXY.x, drawXY.y, scale, scale)
     }
   }
 

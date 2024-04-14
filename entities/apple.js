@@ -7,6 +7,8 @@ export default class Apple extends Pickable {
 
     this.location = new vector2(x, y)
 
-    this.sprite = "red"
+    this.sprite = "apple"
+    this.actualSprite = true
+    this.spriteSize = 0.4
   }
 }

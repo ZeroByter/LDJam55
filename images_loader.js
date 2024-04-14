@@ -86,8 +86,38 @@ export default class SpritesLoader {
 
       await this.#loadImage("tree", "./sprites/tree.png")
 
+      await this.#loadImage("fire_pit", "./sprites/fire_pit.png")
+      await this.#loadImage("fire_pit_lit0", "./sprites/fire_pit_lit0.png")
+      await this.#loadImage("fire_pit_lit1", "./sprites/fire_pit_lit1.png")
+
       await this.#loadImage("stick", "./sprites/stick.png")
-      await this.#loadImage("fire_stick", "./sprites/fire_stick.png")
+      await this.#loadImage("stick_lit0", "./sprites/stick_lit0.png")
+      await this.#loadImage("stick_lit1", "./sprites/stick_lit1.png")
+
+      await this.#loadImage("apple", "./sprites/apple.png")
+      await this.#loadImage("candle", "./sprites/candle.png")
+      await this.#loadImage("candle_lit0", "./sprites/candle_lit0.png")
+      await this.#loadImage("candle_lit1", "./sprites/candle_lit1.png")
+
+      await this.#loadImage("player_idle0", "./sprites/player/player_idle0.png")
+      await this.#loadImage("player_idle1", "./sprites/player/player_idle1.png")
+
+      await this.#loadImage("player_walk_side0", "./sprites/player/player_walk_side0.png")
+      await this.#loadImage("player_walk_side1", "./sprites/player/player_walk_side1.png")
+
+      await this.#loadImage("player_walk_straight0", "./sprites/player/player_walk_straight0.png")
+      await this.#loadImage("player_walk_straight1", "./sprites/player/player_walk_straight1.png")
+
+      await this.#loadImage("player_arms_empty_idle0", "./sprites/player/player_arms_empty_idle0.png")
+      await this.#loadImage("player_arms_empty_idle1", "./sprites/player/player_arms_empty_idle1.png")
+      await this.#loadImage("player_arms_empty_walk_straight", "./sprites/player/player_arms_empty_walk_straight.png")
+      await this.#loadImage("player_arms_empty_walk_side", "./sprites/player/player_arms_empty_walk_side.png")
+
+      await this.#loadImage("player_arms_holding_idle0", "./sprites/player/player_arms_holding_idle0.png")
+      await this.#loadImage("player_arms_holding_idle1", "./sprites/player/player_arms_holding_idle1.png")
+      await this.#loadImage("player_arms_holding_walk_straight", "./sprites/player/player_arms_holding_walk_straight.png")
+      await this.#loadImage("player_arms_holding_walk_side", "./sprites/player/player_arms_holding_walk_side.png")
+
 
       this.imagesLoaded = true
 
