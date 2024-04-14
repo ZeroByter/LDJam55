@@ -12,6 +12,8 @@ export default class Pickable extends Entity {
     this.spriteAngle = Math.random() * 180
     this.flipSprite = Math.random() < 0.5
 
+    this.heldByReplayer = false
+
     this.isBeingHeld = false
 
     this.ritualSlot = null
@@ -34,7 +36,7 @@ export default class Pickable extends Entity {
 
     const drawSize = this.spriteSize * scale
 
-    if (drawXY.x + drawSize < 0 || drawXY.y + drawSize < 0 || drawXY.x > canvas.width || drawXY.y > canvas.height) {
+    if (drawXY.x + drawSize < 0 || drawXY.y + drawSize < 0 || drawXY.x > canvas.width || drawXY.y - drawSize > canvas.height) {
       return
     }
 

@@ -149,7 +149,7 @@ export default class World {
           if (Math.random() < 0.2) {
             this.addEntity(new Apple(x + Math.random(), y + Math.random()))
           }
-          if (Math.random() < 0.3) {
+          if (Math.random() < 0.35) {
             this.addEntity(new Stick(x + Math.random(), y + Math.random()))
           }
         }

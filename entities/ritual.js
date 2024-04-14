@@ -73,9 +73,11 @@ export default class Ritual extends Entity {
           world.addEffect(new MoveToDeathLoseEffect("too_slow"))
         }
       } else {
-        world.addEffect(new MoveToVictoryEffect("too_slow"))
+        world.addEffect(new MoveToVictoryEffect())
       }
       // Ritual done!!! 
+    } else {
+      this.allDone = false
     }
 
     this.lastOccupiedSlots = [...this.occupiedSlots]

@@ -18,7 +18,7 @@ export default class Game {
   constructor(imagesLoadCallback) {
     Game.gameInstance = this
 
-    this.debug = false
+    this.debug = true
 
     this.mainLoopHandle = -1
 

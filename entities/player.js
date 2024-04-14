@@ -61,7 +61,7 @@ export default class Player extends Entity {
         //not holding anything, find something to pick up
 
         for (const [_, entity] of entities) {
-          if (entity instanceof Pickable && entity.location.distance(this.location.minus(0, 0.5)) < 0.5 && !entity.isBeingHeld) {
+          if (entity instanceof Pickable && !entity.heldByReplayer && entity.location.distance(this.location.minus(0, 0.5)) < 0.5 && !entity.isBeingHeld) {
             if (entity instanceof Candle && entity.isLit) {
               entity.makeUnlit()
               entity.ritualSlot.occupied = false
@@ -85,6 +85,10 @@ export default class Player extends Entity {
         if (this.holding instanceof Candle || this.holding instanceof Apple || this.holding instanceof Skull) {
           const rituals = Game.gameInstance.world.rituals
           for (const ritual of rituals) {
+            if (!Game.gameInstance.world.isOverworld && ritual.isOverworld) {
+              continue
+            }
+
             for (const slot of ritual.slots) {
               if (this.holding.location.distance(slot.location.add(0.5, 0.5)) < 0.5) {
                 if ((slot.accepts === "candle" && this.holding instanceof Candle) || (slot.accepts === "apple" && this.holding instanceof Apple) || (slot.accepts === "skull" && this.holding instanceof Skull)) {
