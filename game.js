@@ -17,6 +17,8 @@ export default class Game {
   constructor() {
     Game.gameInstance = this
 
+    this.debug = true
+
     this.mainLoopHandle = -1
 
     this.inputs = new Inputs()
@@ -86,17 +88,19 @@ export default class Game {
       entity.think(time)
     }
 
-    if (this.inputs.isKeyPressed("q")) {
-      Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
-    }
+    if (this.debug) {
+      if (this.inputs.isKeyPressed("q")) {
+        Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
+      }
 
-    if (this.inputs.isKeyPressed("e")) {
-      const entities = Game.gameInstance.world.getEntities()
-      for (const [_, entity] of entities) {
-        if (entity instanceof Stick) {
-          Game.gameInstance.world.getPlayer().holding = entity
-          entity.isBeingHeld = true
-          break
+      if (this.inputs.isKeyPressed("e")) {
+        const entities = Game.gameInstance.world.getEntities()
+        for (const [_, entity] of entities) {
+          if (entity instanceof Stick) {
+            Game.gameInstance.world.getPlayer().holding = entity
+            entity.isBeingHeld = true
+            break
+          }
         }
       }
     }

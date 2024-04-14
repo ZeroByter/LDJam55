@@ -189,19 +189,20 @@ export default class World {
         occupied: false,
       }
 
-      // DEBUG: REMOVE IN PRODUCTION
-      if (accepts === "apple") {
-        const a = new Apple(spot.x + 0.5, spot.y + 0.5)
-        a.ritualSlot = slotData
-        this.addEntity(a)
-      } else if (accepts === "skull") {
-        const a = new Skull(spot.x + 0.5, spot.y + 0.5)
-        a.ritualSlot = slotData
-        this.addEntity(a)
-      } else if (accepts === "candle") {
-        const a = new Candle(spot.x + 0.5, spot.y + 0.5)
-        a.ritualSlot = slotData
-        this.addEntity(a)
+      if (Game.gameInstance.debug) {
+        if (accepts === "apple") {
+          const a = new Apple(spot.x + 0.5, spot.y + 0.5)
+          a.ritualSlot = slotData
+          this.addEntity(a)
+        } else if (accepts === "skull") {
+          const a = new Skull(spot.x + 0.5, spot.y + 0.5)
+          a.ritualSlot = slotData
+          this.addEntity(a)
+        } else if (accepts === "candle") {
+          const a = new Candle(spot.x + 0.5, spot.y + 0.5)
+          a.ritualSlot = slotData
+          this.addEntity(a)
+        }
       }
 
       slots.push(slotData)

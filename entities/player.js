@@ -54,6 +54,7 @@ export default class Player extends Entity {
           if (entity instanceof Pickable && entity.location.distance(this.location) < 0.5 && !entity.isBeingHeld) {
             if (entity instanceof Candle && entity.isLit) {
               entity.makeUnlit()
+              entity.ritualSlot.occupied = false
             } else {
               this.holding = entity
               entity.isBeingHeld = true

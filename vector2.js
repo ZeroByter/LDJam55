@@ -50,6 +50,9 @@ export default class vector2 {
   distance = (otherVector) => {
     return vector2.distance(this.x, this.y, otherVector.x, otherVector.y)
   }
+  midWayTo = (otherVector) => {
+    return new vector2((this.x + otherVector.x) / 2, (this.y + otherVector.y) / 2)
+  }
   toAngle = () => {
     let angle = Math.atan2(this.x, this.y) / Math.PI * 180
 

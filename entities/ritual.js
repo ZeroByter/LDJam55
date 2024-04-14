@@ -61,7 +61,7 @@ export default class Ritual extends Entity {
       this.allOccupiedTime = time
     }
 
-    if (this.allOccupiedTime > -1 && time - this.allOccupiedTime > 3000 && !this.allDone) {
+    if (this.allOccupiedTime > -1 && time - this.allOccupiedTime > 1000 && !this.allDone) {
       this.allDone = true
 
       const world = Game.gameInstance.world
@@ -91,14 +91,42 @@ export default class Ritual extends Entity {
 
     const scale = Game.gameInstance.camera.scale
 
-    for (const slot of this.slots) {
-      const drawXY = Game.gameInstance.camera.worldToScreen(slot.location.x, slot.location.y)
+    const gridResolution = 3
+    const gridSize = 7 * gridResolution
+    const center = this.location.copy()
 
-      if (slot.occupied) {
-        ctx.fillStyle = "black"
-        ctx.fillRect(drawXY.x, drawXY.y, scale, scale)
+    const power = this.countOccupiedSlots(this.occupiedSlots)
+
+    if (power > 0) {
+      for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+          const loc = new vector2(this.location.x + x - 3 - x / 1.5, this.location.y + y - 3 - y / 1.5)
+          const adjustedLoc = loc.minus(1 / 3, 1 / 3)
+
+          const centerDistance = adjustedLoc.distance(center)
+          const slotsDistance = this.slots.map(slot => slot.occupied ? adjustedLoc.distance(slot.location.midWayTo(center)) : 100)
+          const finalDistance = Math.min(centerDistance, ...slotsDistance)
+
+          if (centerDistance > power / 8 * 3.5 + Math.random() / 1.5 || finalDistance > power / 16 * 3.5 + Math.random() / 1.5) {
+            continue
+          }
+
+          const drawXY = Game.gameInstance.camera.worldToScreen(loc.x, loc.y)
+
+          ctx.fillStyle = `hsl(0deg 0% ${Math.random() * 10}%)`
+          ctx.fillRect(drawXY.x, drawXY.y, scale / gridResolution + 1, scale / gridResolution + 1)
+        }
       }
     }
+
+    // for (const slot of this.slots) {
+    //   const drawXY = Game.gameInstance.camera.worldToScreen(slot.location.x, slot.location.y)
+
+    //   if (slot.occupied) {
+    //     ctx.fillStyle = "black"
+    //     ctx.fillRect(drawXY.x, drawXY.y, scale, scale)
+    //   }
+    // }
   }
 
   countOccupiedSlots(occupiedSlots) {
