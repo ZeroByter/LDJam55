@@ -92,6 +92,12 @@ export default class MoveToGhostWorldEffect extends Effect {
         world.playerReplayer = new PlayerReplay(playerId)
         world.addEntity(world.playerReplayer)
 
+        /** @type {Ritual} */
+        const overworldRitual = world.rituals[0]
+        overworldRitual.slots.forEach(slot => slot.occupied = false)
+        overworldRitual.allOccupiedTime = -1
+        overworldRitual.allDone = false
+
         world.addEntity(new Ritual(world, new vector2(105, 100), 8, false))
         world.addEffect(new GhostMoveAreaEffect())
 
@@ -110,7 +116,11 @@ export default class MoveToGhostWorldEffect extends Effect {
               }
             }
 
-            world.tiles[index] = `ghost_${world.tiles[index]}`
+            if (world.tiles[index] == "concrete") {
+              world.tiles[index] = "ghost_concrete"
+            } else {
+              world.tiles[index] = `ghost_grass${Math.floor(Math.random() * 3)}`
+            }
 
             if (world.aboveTiles[index] == "tree") {
               world.aboveTiles[index] = `ghost_${world.aboveTiles[index]}`

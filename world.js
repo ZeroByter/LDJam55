@@ -234,6 +234,10 @@ export default class World {
   }
 
   addEffect(effect) {
+    if (!Game.gameInstance.isRunning) {
+      return
+    }
+
     this.#effects.set(effect.id, effect)
   }
 

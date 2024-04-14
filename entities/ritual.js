@@ -53,15 +53,22 @@ export default class Ritual extends Entity {
 
     this.occupiedSlots = this.slots.map(slot => slot.occupied)
 
-    if (this.countOccupiedSlots(this.occupiedSlots) != this.countOccupiedSlots(this.lastOccupiedSlots)) {
+    const countedOccupiedSlots = this.countOccupiedSlots(this.occupiedSlots)
+    const countedLastOccupiedSlots = this.countOccupiedSlots(this.lastOccupiedSlots)
+
+    if (countedOccupiedSlots != countedLastOccupiedSlots) {
       this.recordExtraData = this.occupiedSlots
+
+      if (countedOccupiedSlots > countedLastOccupiedSlots) {
+        this.playSynth()
+      }
     }
 
     if (occupiedSlotsCount === this.slotsCount && this.allOccupiedTime === -1) {
       this.allOccupiedTime = time
     }
 
-    if (this.allOccupiedTime > -1 && time - this.allOccupiedTime > 1000 && !this.allDone) {
+    if (this.allOccupiedTime > -1 && time - this.allOccupiedTime > 1000 && !this.allDone && Game.gameInstance.isRunning) {
       this.allDone = true
 
       const world = Game.gameInstance.world
@@ -76,8 +83,6 @@ export default class Ritual extends Entity {
         world.addEffect(new MoveToVictoryEffect())
       }
       // Ritual done!!! 
-    } else {
-      this.allDone = false
     }
 
     this.lastOccupiedSlots = [...this.occupiedSlots]
@@ -135,6 +140,15 @@ export default class Ritual extends Entity {
 
   countOccupiedSlots(occupiedSlots) {
     return occupiedSlots.reduce((a, b) => a + (b ? 1 : 0), 0)
+  }
+
+  playSynth() {
+    const audio = new Audio("./sound/synth.wav")
+    audio.volume = 0.125
+    if (this.isOverworld != Game.gameInstance.world.isOverworld) {
+      audio.volume /= 2
+    }
+    audio.play()
   }
 
   recordState() {

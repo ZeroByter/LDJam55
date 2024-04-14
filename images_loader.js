@@ -140,6 +140,25 @@ export default class SpritesLoader {
       this.#loadImage("player_arms_holding_walk_straight", "./sprites/player/player_arms_holding_walk_straight.png")
       this.#loadImage("player_arms_holding_walk_side", "./sprites/player/player_arms_holding_walk_side.png")
 
+      this.#loadImage("ghost_player_idle0", "./sprites/player/ghost_player_idle0.png")
+      this.#loadImage("ghost_player_idle1", "./sprites/player/ghost_player_idle1.png")
+
+      this.#loadImage("ghost_player_walk_side0", "./sprites/player/ghost_player_walk_side0.png")
+      this.#loadImage("ghost_player_walk_side1", "./sprites/player/ghost_player_walk_side1.png")
+
+      this.#loadImage("ghost_player_walk_straight0", "./sprites/player/ghost_player_walk_straight0.png")
+      this.#loadImage("ghost_player_walk_straight1", "./sprites/player/ghost_player_walk_straight1.png")
+
+      this.#loadImage("ghost_player_arms_empty_idle0", "./sprites/player/ghost_player_arms_empty_idle0.png")
+      this.#loadImage("ghost_player_arms_empty_idle1", "./sprites/player/ghost_player_arms_empty_idle1.png")
+      this.#loadImage("ghost_player_arms_empty_walk_straight", "./sprites/player/ghost_player_arms_empty_walk_straight.png")
+      this.#loadImage("ghost_player_arms_empty_walk_side", "./sprites/player/ghost_player_arms_empty_walk_side.png")
+
+      this.#loadImage("ghost_player_arms_holding_idle0", "./sprites/player/ghost_player_arms_holding_idle0.png")
+      this.#loadImage("ghost_player_arms_holding_idle1", "./sprites/player/ghost_player_arms_holding_idle1.png")
+      this.#loadImage("ghost_player_arms_holding_walk_straight", "./sprites/player/ghost_player_arms_holding_walk_straight.png")
+      this.#loadImage("ghost_player_arms_holding_walk_side", "./sprites/player/ghost_player_arms_holding_walk_side.png")
+
 
       this.imagesLoaded = true
 

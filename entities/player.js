@@ -22,7 +22,7 @@ export default class Player extends Entity {
     this.holdingOffset = 0
     this.flipSprite = false
 
-    this.location = new vector2(95.5, 100.5)
+    this.location = new vector2(95.5, 99.5)
     this.lastLocation = this.location.copy()
 
     this.holding = null
@@ -30,12 +30,6 @@ export default class Player extends Entity {
 
   playClick() {
     const audio = new Audio("./sound/click.wav")
-    audio.play()
-  }
-
-  playSynth() {
-    const audio = new Audio("./sound/synth.wav")
-    audio.volume = 0.25
     audio.play()
   }
 
@@ -108,7 +102,6 @@ export default class Player extends Entity {
                 if ((slot.accepts === "candle" && this.holding instanceof Candle) || (slot.accepts === "apple" && this.holding instanceof Apple) || (slot.accepts === "skull" && this.holding instanceof Skull)) {
                   if (!(this.holding instanceof Candle)) {
                     slot.occupied = true
-                    this.playSynth()
                   }
                   this.holding.ritualSlot = slot
                 }
@@ -123,8 +116,10 @@ export default class Player extends Entity {
 
     if (this.holding instanceof Stick && this.location.distance(FirePit.Singleton.location.add(0.5, 0.5)) < 1) {
       if (FirePit.Singleton.isLit) {
-        this.holding.makeLit()
-        this.playClick()
+        if (!this.holding.isLit) {
+          this.holding.makeLit()
+          this.playClick()
+        }
       } else {
         FirePit.Singleton.makeLit()
         this.holding.location = new vector2(-1, -1)
@@ -155,6 +150,11 @@ export default class Player extends Entity {
     this.handsSprite = handsSprite
     this.holdingOffset = holdingOffset
     this.flipSprite = movedDistance.x != 0 && movedDistance.x < 0
+
+    if (!Game.gameInstance.world.isOverworld) {
+      this.sprite = `ghost_${this.sprite}`
+      this.handsSprite = `ghost_${this.handsSprite}`
+    }
 
     this.lastLocation = this.location.copy()
     Game.gameInstance.camera.location = this.location.copy()

@@ -53,7 +53,7 @@ export default class MoveToDeathLoseEffect extends Effect {
           document.querySelector(".you_lose_reason_1").innerHTML = "You died."
           document.querySelector(".you_lose_reason_2").innerHTML = "Your ghost form can not survive alone..."
         } else if (this.reason === "too_slow") {
-          document.querySelector(".you_lose_reason_1").innerHTML = "Toy lost."
+          document.querySelector(".you_lose_reason_1").innerHTML = "You lost."
           document.querySelector(".you_lose_reason_2").innerHTML = "Your physical self completed their ritual before you did!"
         }
 

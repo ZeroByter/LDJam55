@@ -18,6 +18,8 @@ export default class Game {
   constructor(imagesLoadCallback) {
     Game.gameInstance = this
 
+    this.isRunning = false
+
     this.debug = true
 
     this.mainLoopHandle = -1
@@ -89,6 +91,10 @@ export default class Game {
       entity.think(time)
     }
 
+    if (this.inputs.isKeyPressed("escape")) {
+      document.querySelectorAll(".main_menu_button")[0].click()
+    }
+
     if (this.debug) {
       if (this.inputs.isKeyPressed("q")) {
         Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
@@ -125,16 +131,20 @@ export default class Game {
   }
 
   mainLoop(time) {
-    this.unprocessed += Math.min(60, (time - this.lastRanTime) / this.secsPerTick)
-    this.lastRanTime = time
+    if (!this.isRunning) {
+      this.render(time)
+    } else {
+      this.unprocessed += Math.min(60, (time - this.lastRanTime) / this.secsPerTick)
+      this.lastRanTime = time
 
-    while (this.unprocessed >= 1) {
-      this.ticks++
-      this.think(time)
-      this.unprocessed -= 1
+      while (this.unprocessed >= 1) {
+        this.ticks++
+        this.think(time)
+        this.unprocessed -= 1
+      }
+
+      this.render(time)
     }
-
-    this.render(time)
 
     this.mainLoopHandle = window.requestAnimationFrame((time) => {
       this.mainLoop(time)
@@ -142,12 +152,16 @@ export default class Game {
   }
 
   startGame() {
+    this.isRunning = true
+
     this.mainLoopHandle = window.requestAnimationFrame((time) => {
       this.mainLoop(time)
     })
   }
 
   stopGame() {
+    this.isRunning = false
+
     window.cancelAnimationFrame(this.mainLoopHandle)
   }
 }

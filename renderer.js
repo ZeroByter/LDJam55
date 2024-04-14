@@ -20,12 +20,18 @@ export default class Renderer {
   }
 
   render(time) {
+
     if (!Game.gameInstance.images.imagesLoaded) {
       return;
     }
 
     const canvas = this.canvas
     const ctx = this.ctx
+
+    if (!Game.gameInstance.isRunning) {
+      ctx.clearRect(0, 0, 99999, 9999)
+      return
+    }
 
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -53,7 +59,12 @@ export default class Renderer {
           continue
         }
 
-        ctx.drawImage(Game.gameInstance.images.getImage(tile), drawX, drawY, size + fraction, size + fraction)
+        try {
+          ctx.drawImage(Game.gameInstance.images.getImage(tile), drawX, drawY, size + fraction, size + fraction)
+        } catch (e) {
+          console.error(tile)
+          throw e
+        }
       }
     }
 
