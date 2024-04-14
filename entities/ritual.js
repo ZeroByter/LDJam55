@@ -97,6 +97,8 @@ export default class Ritual extends Entity {
 
     const power = this.countOccupiedSlots(this.occupiedSlots)
 
+    const color = this.isOverworld ? "0,0,0" : "50,0,50"
+
     if (power > 0) {
       for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
@@ -113,7 +115,7 @@ export default class Ritual extends Entity {
 
           const drawXY = Game.gameInstance.camera.worldToScreen(loc.x, loc.y)
 
-          ctx.fillStyle = `hsl(0deg 0% ${Math.random() * 10}%)`
+          ctx.fillStyle = `rgba(${color},${Math.random() * 10})`
           ctx.fillRect(drawXY.x, drawXY.y, scale / gridResolution + 1, scale / gridResolution + 1)
         }
       }

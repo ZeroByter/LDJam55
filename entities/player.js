@@ -84,7 +84,7 @@ export default class Player extends Entity {
           const rituals = Game.gameInstance.world.rituals
           for (const ritual of rituals) {
             for (const slot of ritual.slots) {
-              if (this.holding.location.distance(slot.location.add(0, 0.5)) < 0.5) {
+              if (this.holding.location.distance(slot.location.add(0.5, 0.5)) < 0.5) {
                 if ((slot.accepts === "candle" && this.holding instanceof Candle) || (slot.accepts === "apple" && this.holding instanceof Apple) || (slot.accepts === "skull" && this.holding instanceof Skull)) {
                   if (!(this.holding instanceof Candle)) {
                     slot.occupied = true

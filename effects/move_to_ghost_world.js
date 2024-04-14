@@ -151,6 +151,6 @@ export default class MoveToGhostWorldEffect extends Effect {
     textOffset++
     ctx.fillText("Complete your ritual before your physical body or you'll die...", canvas.width / 2, canvas.height / 2 + textOffset * 30)
     textOffset++
-    ctx.fillText("Don't stray too far away from your physical body", canvas.width / 2, canvas.height / 2 + textOffset * 30)
+    ctx.fillText("Don't stray too far away from your physical body...", canvas.width / 2, canvas.height / 2 + textOffset * 30)
   }
 }

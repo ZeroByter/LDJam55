@@ -86,6 +86,8 @@ export default class SpritesLoader {
 
       await this.#loadImage("tree", "./sprites/tree.png")
 
+      await this.#loadImage("skull", "./sprites/skull.png")
+
       await this.#loadImage("fire_pit", "./sprites/fire_pit.png")
       await this.#loadImage("fire_pit_lit0", "./sprites/fire_pit_lit0.png")
       await this.#loadImage("fire_pit_lit1", "./sprites/fire_pit_lit1.png")

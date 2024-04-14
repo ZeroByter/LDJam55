@@ -7,6 +7,8 @@ export default class Skull extends Pickable {
 
     this.location = new vector2(x, y)
 
-    this.sprite = "black"
+    this.sprite = "skull"
+    this.actualSprite = true
+    this.spriteSize = 0.55
   }
 }
