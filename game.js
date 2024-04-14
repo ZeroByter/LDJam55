@@ -8,6 +8,7 @@ import { ReplaySnapshot } from "./replay.js"
 import PlayerReplay from "./entities/playerReplay.js"
 import vector2 from "./vector2.js"
 import MoveToGhostWorldEffect from "./effects/move_to_ghost_world.js"
+import Stick from "./entities/stick.js"
 
 export default class Game {
   /** @type Game */
@@ -87,6 +88,17 @@ export default class Game {
 
     if (this.inputs.isKeyPressed("q")) {
       Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
+    }
+
+    if (this.inputs.isKeyPressed("e")) {
+      const entities = Game.gameInstance.world.getEntities()
+      for (const [_, entity] of entities) {
+        if (entity instanceof Stick) {
+          Game.gameInstance.world.getPlayer().holding = entity
+          entity.isBeingHeld = true
+          break
+        }
+      }
     }
 
     for (const [key, keyData] of this.inputs.keys) {

@@ -1,4 +1,6 @@
+import MoveToDeathLoseEffect from "../effects/move_to_death_lose.js";
 import MoveToGhostWorldEffect from "../effects/move_to_ghost_world.js";
+import MoveToVictoryEffect from "../effects/move_to_victory.js";
 import Game from "../game.js";
 import { ReplayNonPlayerSnapshot } from "../replay.js";
 import vector2 from "../vector2.js";
@@ -62,11 +64,16 @@ export default class Ritual extends Entity {
     if (this.allOccupiedTime > -1 && time - this.allOccupiedTime > 3000 && !this.allDone) {
       this.allDone = true
 
+      const world = Game.gameInstance.world
+
       if (this.isOverworld) {
-        Game.gameInstance.world.addEffect(new MoveToGhostWorldEffect())
-        //spawn 'transition to ghost world' effect
+        if (world.isOverworld) {
+          world.addEffect(new MoveToGhostWorldEffect())
+        } else {
+          world.addEffect(new MoveToDeathLoseEffect("too_slow"))
+        }
       } else {
-        //game over! transition to "you win" screen
+        world.addEffect(new MoveToVictoryEffect("too_slow"))
       }
       // Ritual done!!! 
     }

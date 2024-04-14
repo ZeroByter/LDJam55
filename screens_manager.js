@@ -1,6 +1,9 @@
 export default class ScreensManager {
-  constructor() {
+  /** @type {ScreensManager} */
+  static Singleton
 
+  constructor() {
+    ScreensManager.Singleton = this
   }
 
   setScreen(name, data) {

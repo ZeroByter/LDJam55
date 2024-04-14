@@ -2,6 +2,7 @@ import Game from "../game.js"
 import { ilerp, lerp } from "../math.js"
 import vector2 from "../vector2.js"
 import Effect from "./effect.js"
+import MoveToDeathLoseEffect from "./move_to_death_lose.js"
 
 export default class GhostMoveAreaEffect extends Effect {
   constructor(activateDelay) {
@@ -25,7 +26,7 @@ export default class GhostMoveAreaEffect extends Effect {
       if (this.outsideZoneHurt >= 1) {
         if (!this.isPlayerDead) {
           this.isPlayerDead = true
-          world.addEffect(new MoveToDeathLoseEffect())
+          world.addEffect(new MoveToDeathLoseEffect("ghost_area"))
         }
       } else {
         this.outsideZoneHurt += 0.02
