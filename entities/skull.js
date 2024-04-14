@@ -15,7 +15,16 @@ export default class Skull extends Pickable {
   think(time) {
     super.think(time)
 
-    const { world } = Game.gameInstance
+    const { world, camera, renderer } = Game.gameInstance
+
+    const drawXY = camera.worldToScreen(this.location.x, this.location.y)
+
+    const drawX = Math.floor(drawXY.x)
+    const drawY = Math.floor(drawXY.y)
+
+    if (drawX + camera.scale < 0 || drawY + camera.scale < 0 || drawX > renderer.canvas.width || drawY > renderer.canvas.height) {
+      return
+    }
 
     const playerLocation = world.playerReplayer != null ? world.playerReplayer.location : world.getPlayer().location
 
