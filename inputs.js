@@ -12,6 +12,10 @@ export default class Inputs {
   }
 
   #onKeyDown(e) {
+    if (e.keyCode == 32 && e.target == document.body) {
+      e.preventDefault();
+    }
+
     let key = e.code.toLowerCase().replace("key", "")
     if (key == " ") key = "space"
 
